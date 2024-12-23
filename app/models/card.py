@@ -3,5 +3,6 @@ from ..db import db
 
 class Card(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     message: Mapped[str]
     likes: Mapped[int]
