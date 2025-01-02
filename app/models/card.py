@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class Card(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     message: Mapped[str]
-    count: Mapped[int]
+    likes: Mapped[int]
 
     board_id: Mapped[Optional[int]] = mapped_column(ForeignKey("board.id"))
     board: Mapped[Optional["Board"]] = relationship("Board", back_populates="cards")
@@ -20,7 +20,7 @@ class Card(db.Model):
         card_dict = {
             "id": self.id,
             "message": self.message,
-            "count": self.count,
+            "likes": self.likes,
         }
         if self.board_id is not None:
             card_dict["board_id"] = self.board_id
@@ -31,7 +31,7 @@ class Card(db.Model):
     def from_dict(cls, card_data):
         board_id = card_data.get("board_id")
         new_card = cls(
-            message=card_data["message"], count=card_data["count"], board_id=board_id
+            message=card_data["message"], likes=card_data["likes"], board_id=board_id
         )
 
         return new_card
