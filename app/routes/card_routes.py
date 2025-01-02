@@ -1,9 +1,3 @@
-# from flask import Blueprint, abort, make_response, request, Response
-# from app.models.card import Card
-# import os
-# import requests
-# from ..db import db
-# from .route_utilities import validate_model, create_model
 from flask import Blueprint, abort, make_response, request
 from app.models.card import Card
 from ..db import db
@@ -11,9 +5,9 @@ import os
 import requests
 from .route_utilities import validate_model, create_model
 
-cards_bp = Blueprint("cards_bp", __name__, url_prefix="/cards")
+bp = Blueprint("cards_bp", __name__, url_prefix="/cards")
 
-@cards_bp.post("")
+@bp.post("")
 def create_card():
 
     request_body = request.get_json()
@@ -27,8 +21,8 @@ def create_card():
     return make_response({"Card": card_dict}, 201)
 
     
-@cards_bp.get("")
-def get_all_books():
+@bp.get("")
+def get_all_cards():
     query = db.select(Card).order_by(Card.id)
     cards = db.session.scalars(query)
     # We could also write the line above as:
@@ -45,7 +39,7 @@ def get_all_books():
         )
     return cards_response
 
-@cards_bp.get("/<card_id>")
+@bp.get("/<card_id>")
 def get_one_card(card_id):
     query = db.select(Card).where(Card.id == card_id)
     card = db.session.scalar(query)
@@ -54,7 +48,7 @@ def get_one_card(card_id):
     return {"card": card.to_dict()}, 200
 
 # DELETE
-@cards_bp.delete("/<card_id>")
+@bp.delete("/<card_id>")
 def delete_card(card_id):
     card = validate_model(Card, card_id)
     card_message = card.message
