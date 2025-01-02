@@ -33,8 +33,8 @@ def get_all_cards():
         cards_response.append(
             {
                 "id": card.id,
-                "message": card.title,
-                "count": card.description
+                "message": card.message,
+                "count": card.count
             }
         )
     return cards_response
