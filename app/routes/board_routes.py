@@ -6,7 +6,7 @@ import requests
 from ..db import db
 from .route_utilities import validate_model, create_model
 
-bp = Blueprint("board", __name__, url_prefix="/boards")
+bp = Blueprint("boards_bp", __name__, url_prefix="/boards")
 
 # Create a new board
 @bp.post("")
