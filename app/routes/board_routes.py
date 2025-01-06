@@ -12,7 +12,7 @@ bp = Blueprint("board", __name__, url_prefix="/boards")
 @bp.post("")
 def create_board():
     request_body = request.get_json()
-    board = create_model(Board, request_body)
+    response = create_model(Board, request_body)
     board_dict = response.get_json()
 
     return make_response({"board": board_dict}), 201

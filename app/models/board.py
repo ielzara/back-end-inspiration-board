@@ -19,9 +19,9 @@ class Board(db.Model):
             "cards": [card.to_dict() for card in self.cards]
         }
 
-        @classmethod
-        def from_dict(cls, data):
-            return cls(
-                title=data["title"],
-                owner=data["owner"]
-            )
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            title=data["title"],
+            owner=data["owner"]
+        )
