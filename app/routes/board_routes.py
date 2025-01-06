@@ -4,7 +4,7 @@ from app.models.card import Card
 import os
 import requests
 from ..db import db
-from .route_utilities import validate_model, create_model
+from .route_utilities import validate_model, create_model, send_slack_notification
 
 bp = Blueprint("board", __name__, url_prefix="/boards")
 
@@ -84,4 +84,7 @@ def handle_cards_for_board(board_id):
         return { "id": board.id, "card_ids": [card.id for card in board.cards] }, 200
     else:
         request_body["board_id"] = board.id
+        
+        send_slack_notification(request_body["message"])
+        
         return create_model(Card, request_body)

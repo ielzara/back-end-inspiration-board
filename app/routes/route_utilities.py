@@ -1,5 +1,7 @@
 from flask import abort, make_response
 from ..db import db
+import os
+import requests
 
 
 def validate_model(cls, model_id):
@@ -32,3 +34,20 @@ def create_model(cls, model_data):
     model_name = cls.__name__.lower()
 
     return make_response(new_model.to_dict(), 201)
+
+def send_slack_notification(message):
+    slack_token = os.environ.get("SLACK_BOT_TOKEN")
+    
+    url = "https://slack.com/api/chat.postMessage"
+
+    headers = {
+        "Authorization": f"Bearer {slack_token}",
+        "Content-Type": "application/json"
+    }
+
+    message_body = {
+        "channel": "api-test-channel",
+        "text": f"Someone added a new card: {message}"
+    }
+
+    requests.post(url, headers=headers, json=message_body)
