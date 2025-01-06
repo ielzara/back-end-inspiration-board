@@ -31,7 +31,7 @@ class Card(db.Model):
     def from_dict(cls, card_data):
         board_id = card_data.get("board_id")
         new_card = cls(
-            message=card_data["message"], likes=card_data["likes"], board_id=board_id
+        message=card_data["message"], likes=card_data["likes"], board_id=board_id
         )
 
         return new_card
