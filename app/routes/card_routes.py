@@ -18,13 +18,13 @@ def delete_card(card_id):
 
     return {"details": f'Card {card_id} "{card_message}" successfully deleted'}, 200
 
+
 # Update Likes
 @bp.patch("/<card_id>/like")
 def update_card_likes(card_id):
     card = validate_model(Card, card_id)
-    
+
     card.likes += 1
     db.session.commit()
-    
-    return {"card": card.to_dict()}, 200
 
+    return {"card": card.to_dict()}, 200
