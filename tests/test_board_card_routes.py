@@ -48,21 +48,21 @@ def test_create_card_for_board(client, one_saved_board):
     assert response_body["message"] == "New card message"
     assert response_body["likes"] == 0
 
-    def test_delete_card(client, multiple_boards_with_cards):
-        board = multiple_boards_with_cards[0]
-        card = board.cards[0]
+def test_delete_card(client, multiple_boards_with_cards):
+    board = multiple_boards_with_cards[0]
+    card = board.cards[0]
 
-        # Act
-        response = client.delete(f"/cards/{card.id}")
-        response_body = response.get_json()
+    # Act
+    response = client.delete(f"/cards/{card.id}")
+    response_body = response.get_json()
 
-        # Assert
-        assert response.status_code == 200
-        assert "details" in response_body
-        assert response_body == {
-            "details": f'Card {card.id} "{card.message}" successfully deleted'
-        }
+    # Assert
+    assert response.status_code == 200
+    assert "details" in response_body
+    assert response_body == {
+        "details": f'Card {card.id} "{card.message}" successfully deleted'
+    }
 
-        # Check that the card was deleted
-        response = client.get(f"/cards/{card.id}")
-        assert response.status_code == 404
+    # Check that the card was deleted
+    response = client.get(f"/cards/{card.id}")
+    assert response.status_code == 404
